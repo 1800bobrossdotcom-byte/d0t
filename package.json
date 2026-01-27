@@ -1,0 +1,25 @@
+{
+  "name": "d0t",
+  "version": "1.0.0",
+  "description": "D0T.dev - The bridge between human and AI",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "automation",
+    "b0b"
+  ],
+  "author": "b0b.dev",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "sharp": "^0.34.5"
+  },
+  "dependencies": {
+    "tesseract.js": "^7.0.0"
+  }
+}

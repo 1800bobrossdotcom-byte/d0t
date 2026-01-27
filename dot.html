@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * { margin: 0; padding: 0; }
+    body {
+      background: transparent;
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+    }
+    
+    .d0t {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    /* The pulsing outer ring */
+    .ring {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid var(--color, #f59e0b);
+      opacity: 0.8;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    /* The core dot */
+    .core {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color, #f59e0b);
+      box-shadow: 0 0 20px var(--color, #f59e0b);
+    }
+    
+    /* Mode colors */
+    .guardian { --color: #10b981; }
+    .turbo { --color: #f59e0b; }
+    .sword { --color: #ef4444; }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="d0t turbo" id="d0t">
+    <div class="ring"></div>
+    <div class="core"></div>
+  </div>
+  
+  <script>
+    const { ipcRenderer } = require('electron');
+    
+    ipcRenderer.on('set-mode', (_, mode) => {
+      const d0t = document.getElementById('d0t');
+      d0t.className = 'd0t ' + mode;
+    });
+  </script>
+</body>
+</html>
