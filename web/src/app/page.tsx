@@ -199,6 +199,7 @@ export default function D0TFinance() {
           </Link>
           
           <div className="hidden md:flex items-center gap-8 text-sm">
+            <Link href="/dashboard" className="text-[#00CCFF] hover:text-white transition-colors font-medium">Dashboard</Link>
             <a href="#agents" className="text-[#888] hover:text-white transition-colors">Agents</a>
             <a href="#terminal" className="text-[#888] hover:text-white transition-colors">Terminal</a>
             <a href="#portfolio" className="text-[#888] hover:text-white transition-colors">Portfolio</a>
@@ -641,21 +642,29 @@ export default function D0TFinance() {
                 <p className="text-[#888]">B0B Ecosystem</p>
                 <a href="https://0type.b0b.dev" className="block text-[#555] hover:text-white">0TYPE</a>
                 <a href="https://b0b.dev" className="block text-[#555] hover:text-white">B0B.DEV</a>
-                <a href="https://github.com/b0bthebuilder" className="block text-[#555] hover:text-white">GitHub</a>
+                <a href="https://github.com/1800bobrossdotcom-byte" className="block text-[#555] hover:text-white">GitHub</a>
               </div>
               
               <div className="space-y-2">
-                <p className="text-[#888]">Markets</p>
-                <span className="block text-[#555]">Polymarket</span>
-                <span className="block text-[#555]">Base Memecoins</span>
-                <span className="block text-[#555]">AI Bluechips</span>
+                <p className="text-[#888]">AI Community</p>
+                <a href="https://bankr.bot" className="block text-[#0052FF] hover:text-white">BANKR</a>
+                <a href="https://clanker.world" className="block text-[#8B5CF6] hover:text-white">CLANKER</a>
+                <a href="https://clawd.ai" className="block text-[#F97316] hover:text-white">CLAWD</a>
+                <a href="https://drb.gg" className="block text-[#22C55E] hover:text-white">DRB</a>
+              </div>
+              
+              <div className="space-y-2">
+                <p className="text-[#888]">Infrastructure</p>
+                <a href="https://base.org" className="block text-[#0052FF] hover:text-white">Base</a>
+                <a href="https://anthropic.com" className="block text-[#D97706] hover:text-white">Anthropic</a>
+                <a href="https://polymarket.com" className="block text-[#555] hover:text-white">Polymarket</a>
               </div>
             </div>
           </div>
           
           <div className="mt-12 pt-8 border-t border-[#2A2A2A] flex flex-col md:flex-row justify-between gap-4 text-sm text-[#555]">
             <p>© 2026 D0T.FINANCE. A B0B project.</p>
-            <p>Paper trading mode · Built on Base</p>
+            <p>Paper trading mode · Built on Base · Powered by Bankr</p>
           </div>
         </div>
       </footer>
