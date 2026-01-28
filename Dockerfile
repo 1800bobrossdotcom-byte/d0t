@@ -2,13 +2,13 @@
 
 WORKDIR /app
 
-# Only copy web folder
-COPY web/package*.json ./
+# Copy web package files explicitly
+COPY web/package.json ./package.json
 
 # Install dependencies
 RUN npm install
 
-# Copy web source
+# Copy rest of web source
 COPY web/ ./
 
 # Build Next.js
