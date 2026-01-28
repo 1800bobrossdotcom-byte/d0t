@@ -25,19 +25,19 @@ const Tesseract = require('tesseract.js');
 
 const CONFIG = {
   // How often to check if screen changed
-  checkInterval: 3000,
+  checkInterval: 3000,  // 3 seconds between checks
   
   // How many consecutive unchanged checks = timeout detected
-  unchangedThreshold: 3,  // 3 checks * 3 seconds = 9 seconds of no change
+  unchangedThreshold: 2,  // 2 checks * 3 seconds = 6 seconds of no change
   
   // After clicking, wait this long before resuming detection
-  cooldownAfterClick: 5000,
+  cooldownAfterClick: 3000,
   
   // All buttons that indicate Claude stopped/needs permission
-  targetButtons: ['Continue', 'Keep', 'Allow', 'Yes', 'OK', 'Proceed', 'Run'],
+  targetButtons: ['Continue', 'Keep', 'Allow', 'Yes', 'OK', 'Proceed', 'Run', 'Review', 'Accept', 'Confirm', 'Pause'],
   
   // Minimum confidence to trust OCR
-  minConfidence: 85,
+  minConfidence: 70,  // Lowered for VS Code buttons
 };
 
 // ══════════════════════════════════════════════════════════════

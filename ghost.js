@@ -4,17 +4,95 @@
  * ══════════════════════════════════════════════════════════════
  * 
  * Active Ghost - Watches screen, makes decisions, clicks buttons
+ * Reports heartbeat to Brain for coordination
  * 
  * TRAITS:
  *   - Uses proven OCR from agent.js
  *   - Learns button positions from successful clicks
  *   - Falls back to known positions when OCR fails
  *   - Timeout-based fallback clicking
+ *   - Reports to Brain every heartbeat
  */
 
 const { execSync } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 const Tesseract = require('tesseract.js');
+
+// ══════════════════════════════════════════════════════════════
+// BRAIN CONNECTION
+// ══════════════════════════════════════════════════════════════
+
+const BRAIN_PULSE_PATH = path.join(__dirname, '..', 'brain', 'd0t-pulse.json');
+const BRAIN_SIGHTS_PATH = path.join(__dirname, '..', 'brain', 'd0t-sights.json');
+const BRAIN_HOME = path.join(__dirname, '..', 'brain');
+
+// Patterns that indicate notifications/popups/alerts to report
+const NOTIFICATION_PATTERNS = [
+  'error', 'warning', 'alert', 'failed', 'exception',
+  'disabled', 'enable', 'configure', 'install', 
+  'update', 'restart', 'reload', 'permission',
+  'environment', 'terminal', 'notification',
+];
+
+function reportToBrain(status) {
+  try {
+    const pulse = {
+      agent: 'd0t-ghost',
+      timestamp: new Date().toISOString(),
+      status: status.status || 'watching',
+      wordsScanned: status.words || 0,
+      buttonsFound: status.buttons || 0,
+      lastAction: status.action || null,
+      actionsThisMinute: state.actionsThisMinute,
+      uptime: Date.now() - state.startTime,
+    };
+    
+    // Ensure brain directory exists
+    if (!fs.existsSync(BRAIN_HOME)) {
+      fs.mkdirSync(BRAIN_HOME, { recursive: true });
+    }
+    
+    fs.writeFileSync(BRAIN_PULSE_PATH, JSON.stringify(pulse, null, 2));
+  } catch (e) {
+    // Silent fail - don't crash ghost if brain reporting fails
+  }
+}
+
+// Report interesting things D0T sees to Brain
+function reportSights(words, fullText) {
+  try {
+    const sights = {
+      agent: 'd0t-ghost',
+      timestamp: new Date().toISOString(),
+      notifications: [],
+      interestingText: [],
+    };
+    
+    // Look for notification patterns
+    const lowerText = fullText.toLowerCase();
+    NOTIFICATION_PATTERNS.forEach(pattern => {
+      if (lowerText.includes(pattern)) {
+        // Find the sentence/context around this pattern
+        const idx = lowerText.indexOf(pattern);
+        const start = Math.max(0, lowerText.lastIndexOf('.', idx) + 1);
+        const end = Math.min(fullText.length, lowerText.indexOf('.', idx + pattern.length) + 1 || fullText.length);
+        const context = fullText.slice(start, end).trim().slice(0, 200);
+        if (context && !sights.notifications.some(n => n.includes(pattern))) {
+          sights.notifications.push(context);
+        }
+      }
+    });
+    
+    // Only write if we found something interesting
+    if (sights.notifications.length > 0) {
+      fs.writeFileSync(BRAIN_SIGHTS_PATH, JSON.stringify(sights, null, 2));
+      log('SIGHT', `Reported ${sights.notifications.length} notifications to Brain`);
+    }
+  } catch (e) {
+    // Silent fail
+  }
+}
 
 // ══════════════════════════════════════════════════════════════
 // CONFIGURATION
@@ -49,6 +127,7 @@ let state = {
   sameButtonCount: 0,  // How many times we clicked the same button
   pendingButton: null, // Button we saw last scan (need to see twice to confirm)
   pendingCount: 0,     // How many scans we've seen this button
+  startTime: Date.now(), // For uptime tracking
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -60,6 +139,7 @@ function log(type, msg, detail = '') {
   const icons = {
     'INFO': 'ℹ️', 'SCAN': '👁️', 'FOUND': '🎯', 'ACTION': '🖱️',
     'DECIDE': '🧠', 'ERROR': '❌', 'DEBUG': '•', 'SUCCESS': '✅',
+    'SIGHT': '👀',
   };
   console.log(`${icons[type] || '•'} [${time}] ${msg}${detail ? ' ' + detail : ''}`);
 }
@@ -305,7 +385,18 @@ async function ghostLoop() {
   const ocrResult = await ocr(imgPath);
   log('DEBUG', `${ocrResult.words.length} words`);
   
+  // Report what D0T sees (notifications, errors, etc) to Brain
+  reportSights(ocrResult.words, ocrResult.text);
+  
   const decision = decide(ocrResult);
+  
+  // Report to Brain
+  reportToBrain({
+    status: decision.action === 'click' ? 'clicking' : 'watching',
+    words: ocrResult.words.length,
+    buttons: findButtons(ocrResult.words).length,
+    action: decision.action === 'click' ? { x: decision.x, y: decision.y, reason: decision.reason } : null,
+  });
   
   if (decision.action === 'click') {
     log('DECIDE', decision.reason);

@@ -9,6 +9,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import TeamChat from './components/TeamChat';
 
 // ══════════════════════════════════════════════════════════════
 // TYPES
@@ -582,6 +583,23 @@ export default function D0TFinance() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Team Chat Section */}
+      <section className="py-24 px-6 border-t border-[#2A2A2A]">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-sm font-mono text-[#888] mb-1">GLASS BOX</h2>
+              <p className="text-xs text-[#555]">See how we think. Transparent AI coordination.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-xs text-[#555]">LIVE</span>
+            </div>
+          </div>
+          <TeamChat />
         </div>
       </section>
 
