@@ -85,6 +85,7 @@ const BLUECHIPS = [
   { symbol: 'DRB', name: 'DRB', change: -14.7 },
   { symbol: 'CLANKER', name: 'Clanker', change: 21.7 },
   { symbol: 'CLAWD', name: 'Clawd', change: 15954 },
+  { symbol: 'MACHINES', name: 'Machines', change: 42.3 },
 ];
 
 const ALLOCATION_CONFIG = [
@@ -604,6 +605,43 @@ export default function D0TFinance() {
         </div>
       </section>
 
+      {/* Trusted Partners Section */}
+      <section className="py-16 px-6 border-t border-[#2A2A2A] bg-[#0A0A0A]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-sm font-mono text-[#888]">Trusted Partners</h2>
+            <span className="text-xs text-[#555]">Infrastructure & AI</span>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+            <a href="https://anthropic.com" target="_blank" className="group p-4 border border-[#2A2A2A] rounded-lg hover:border-[#D97706]/50 transition-all text-center">
+              <div className="text-2xl mb-2">🧠</div>
+              <p className="text-xs font-mono" style={{ color: '#D97706' }}>Anthropic</p>
+            </a>
+            <a href="https://x.ai" target="_blank" className="group p-4 border border-[#2A2A2A] rounded-lg hover:border-white/50 transition-all text-center">
+              <div className="text-2xl mb-2">🤖</div>
+              <p className="text-xs font-mono text-white">xAI / Grok</p>
+            </a>
+            <a href="https://base.org" target="_blank" className="group p-4 border border-[#2A2A2A] rounded-lg hover:border-[#0052FF]/50 transition-all text-center">
+              <div className="text-2xl mb-2">🔵</div>
+              <p className="text-xs font-mono" style={{ color: '#0052FF' }}>Base</p>
+            </a>
+            <a href="https://fileverse.io" target="_blank" className="group p-4 border border-[#2A2A2A] rounded-lg hover:border-[#8B5CF6]/50 transition-all text-center">
+              <div className="text-2xl mb-2">📁</div>
+              <p className="text-xs font-mono" style={{ color: '#8B5CF6' }}>Fileverse</p>
+            </a>
+            <a href="https://bankr.bot" target="_blank" className="group p-4 border border-[#2A2A2A] rounded-lg hover:border-[#0052FF]/50 transition-all text-center">
+              <div className="text-2xl mb-2">🏦</div>
+              <p className="text-xs font-mono" style={{ color: '#0052FF' }}>Bankr</p>
+            </a>
+            <a href="https://polymarket.com" target="_blank" className="group p-4 border border-[#2A2A2A] rounded-lg hover:border-[#22C55E]/50 transition-all text-center">
+              <div className="text-2xl mb-2">📊</div>
+              <p className="text-xs font-mono" style={{ color: '#22C55E' }}>Polymarket</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-24 px-6 border-t border-[#2A2A2A]">
         <div className="max-w-4xl mx-auto text-center">
@@ -651,12 +689,15 @@ export default function D0TFinance() {
                 <a href="https://clanker.world" className="block text-[#8B5CF6] hover:text-white">CLANKER</a>
                 <a href="https://clawd.ai" className="block text-[#F97316] hover:text-white">CLAWD</a>
                 <a href="https://drb.gg" className="block text-[#22C55E] hover:text-white">DRB</a>
+                <a href="https://machines.xyz" className="block text-[#00FFFF] hover:text-white">$MACHINES</a>
               </div>
               
               <div className="space-y-2">
                 <p className="text-[#888]">Infrastructure</p>
                 <a href="https://base.org" className="block text-[#0052FF] hover:text-white">Base</a>
                 <a href="https://anthropic.com" className="block text-[#D97706] hover:text-white">Anthropic</a>
+                <a href="https://x.ai" className="block text-white hover:text-[#888]">xAI / Grok</a>
+                <a href="https://fileverse.io" className="block text-[#8B5CF6] hover:text-white">Fileverse</a>
                 <a href="https://polymarket.com" className="block text-[#555] hover:text-white">Polymarket</a>
               </div>
             </div>
