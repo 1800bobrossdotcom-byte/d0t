@@ -266,6 +266,27 @@ Ghost watches for common UI buttons (Continue, Keep, Allow, Yes, OK) and clicks 
 
 ---
 
+## 🚨 MANDATORY: Quality Check Before Deploy (d0t/web)
+
+**NEVER push without running this first:**
+
+```powershell
+# B0B Quality Check for D0T Web (MANDATORY)
+cd c:\workspace\b0b-platform\d0t\web
+npx tsc --noEmit      # Must pass
+npm run build         # Must pass
+# If both pass → git add, commit, push
+# If either fails → FIX FIRST
+
+# After push:
+cd ..; railway redeploy --yes
+
+# Verify deployment:
+curl.exe -s https://d0t.b0b.dev | Select-String "title"
+```
+
+---
+
 ## Notes
 
 - OCR positions are estimates; Browser CDP is precise
