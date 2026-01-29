@@ -1,5 +1,21 @@
-﻿[deploy]
-startCommand = "npm run start"
+﻿[build]
+builder = "nixpacks"
+watchPatterns = ["web/**"]
+
+[build.nixpacksPlan]
+providers = ["node"]
+
+[build.nixpacksPlan.phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[build.nixpacksPlan.phases.install]
+cmds = ["cd web && npm ci || npm install"]
+
+[build.nixpacksPlan.phases.build]
+cmds = ["cd web && npm run build"]
+
+[deploy]
+startCommand = "cd web && npm run start"
 healthcheckPath = "/"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
